@@ -1,4 +1,5 @@
 using GIT_API.Data;
+using GIT_API.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
