@@ -17,7 +17,33 @@ namespace GIT_API.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        #region Api's
+        [HttpGet]
+        public IActionResult Get(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return BadRequest("Username cannot be empty.");
+            }
+
+            var user = _context.UserLogins.FirstOrDefault(u => u.UserName == username);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            // Optionally, you may want to exclude sensitive information before returning the user object
+            var userResponse = new
+            {
+                user.Id,
+                user.UserName,
+                // Include other necessary user properties here
+            };
+
+            return Ok(userResponse);
+        }
+          [HttpPost]
         public IActionResult Post([FromBody] UserLogin model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.UserName) || string.IsNullOrWhiteSpace(model.UserPassword))
@@ -39,8 +65,19 @@ namespace GIT_API.Controllers
            
             return Ok("User created successfully.");
         }
+        #endregion
+
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 
