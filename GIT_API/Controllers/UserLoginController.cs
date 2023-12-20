@@ -16,6 +16,28 @@ namespace GIT_API.Controllers
         {
             _context = context;
         }
+        #region Api's
+        [HttpGet]
+        public IActionResult Get(string username)
+        {
+            var allUsers = _context.UserLogins.ToList();
+
+            if (allUsers == null || allUsers.Count == 0)
+            {
+                return NotFound("No users found.");
+            }
+
+          
+            var usersResponse = allUsers.Select(user => new
+            {
+                user.Id,
+                user.UserName,
+                user.UserPassword,
+               
+            }).ToList();
+
+            return Ok(usersResponse);
+        }
 
         [HttpPost]
         public IActionResult Post([FromBody] UserLogin model)
@@ -39,22 +61,19 @@ namespace GIT_API.Controllers
 
             return Ok("User created successfully.");
         }
+        #endregion
 
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] Register register)
-        {
-            if (register == null)
-            {
-                return BadRequest("Invalid data");
-            }
-
-            _context.Registers.Add(register);
-            _context.SaveChanges();
-
-            return Ok("User registered successfully");
-        }
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 
