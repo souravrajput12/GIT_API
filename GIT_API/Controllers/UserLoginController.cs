@@ -27,23 +27,31 @@ namespace GIT_API.Controllers
             }
 
             var user = _context.UserLogins.FirstOrDefault(u => u.UserName == username);
-
             if (user == null)
             {
                 return NotFound("User not found.");
             }
 
-            // Optionally, you may want to exclude sensitive information before returning the user object
-            var userResponse = new
+
+            var allUsers = _context.UserLogins.ToList();
+
+            if (allUsers == null || allUsers.Count == 0)
+            {
+                return NotFound("No users found.");
+            }
+
+          
+            var usersResponse = allUsers.Select(user => new
             {
                 user.Id,
                 user.UserName,
-                // Include other necessary user properties here
-            };
+               
+            }).ToList();
 
-            return Ok(userResponse);
+            return Ok(usersResponse);
         }
-          [HttpPost]
+
+        [HttpPost]
         public IActionResult Post([FromBody] UserLogin model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.UserName) || string.IsNullOrWhiteSpace(model.UserPassword))
