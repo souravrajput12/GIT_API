@@ -54,6 +54,16 @@ namespace GIT_API.Controllers
             _context.SaveChanges();
             return Ok();
         }
+        [HttpGet]
+        public IActionResult Get(UserDetail detail, UserLogin user)
+        {
+            if (detail == null) return BadRequest();
+            if(detail.UserName == user.UserName || detail.Password == user.UserPassword)
+            {
+                return Ok();    
+            }
+            return Ok();
+        }
     }
 }
 
