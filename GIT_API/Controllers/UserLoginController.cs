@@ -32,12 +32,26 @@ namespace GIT_API.Controllers
                 return Conflict("Username already exists.");
             }
 
-            
+
             _context.UserLogins.Add(model);
             _context.SaveChanges();
 
-           
+
             return Ok("User created successfully.");
+        }
+
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] Register register)
+        {
+            if (register == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
+            _context.Registers.Add(register);
+            _context.SaveChanges();
+
+            return Ok("User registered successfully");
         }
     }
 }

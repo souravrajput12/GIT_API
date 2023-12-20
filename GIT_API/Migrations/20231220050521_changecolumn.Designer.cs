@@ -3,6 +3,7 @@ using GIT_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GIT_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220050521_changecolumn")]
+    partial class changecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +71,12 @@ namespace GIT_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserIdId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserIdId");
 
                     b.ToTable("Registers");
                 });
@@ -93,6 +100,17 @@ namespace GIT_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserLogins");
+                });
+
+            modelBuilder.Entity("GIT_API.Models.Register", b =>
+                {
+                    b.HasOne("GIT_API.Models.UserLogin", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserIdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserId");
                 });
 #pragma warning restore 612, 618
         }
