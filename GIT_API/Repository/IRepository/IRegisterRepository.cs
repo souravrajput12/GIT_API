@@ -2,7 +2,7 @@
 
 namespace GIT_API.Repository.IRepository
 {
-    public interface IRegisterRepository : IRepository<Register>
+    public interface IRegisterRepository : IRepository<UserDetail>
     {
     }
 }

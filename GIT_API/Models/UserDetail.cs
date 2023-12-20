@@ -2,7 +2,7 @@
 
 namespace GIT_API.Models
 {
-    public class Register
+    public class UserDetail
     {
         public int Id { get; set; }
         [Required]

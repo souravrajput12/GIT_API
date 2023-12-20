@@ -8,6 +8,6 @@ namespace GIT_API.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options) : base (options)
         {}
         public DbSet<UserLogin> UserLogins { get; set; }
-        public DbSet<Register> Registers { get; set; }
+        public DbSet<UserDetail> Registers { get; set; }
     }
 }
